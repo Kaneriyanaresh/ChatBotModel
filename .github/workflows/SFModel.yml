@@ -11,7 +11,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Change to repo directory
-        run: cd SalesforceETPLFunctions || echo "Can't cd into SalesforceETPLFunctions"
+        run: cd ChatBotModel || echo "Can't cd into ChatBotModel"
         if: github.event.client_payload.PRIVATE_KEY != ''
 
       - name: Install Salesforce CLI
