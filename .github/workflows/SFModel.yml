@@ -31,7 +31,8 @@ jobs:
         if: github.event.client_payload.PRIVATE_KEY != ''
 
       - name: 'Authenticate SF Org and Functions Account'
-        run: ~/sfdx/bin/sf login functions sfdx force:auth:jwt:grant -u ${{ github.event.client_payload.USER_NAME }} -f ~/sfdx/server.key -i ${{ github.event.client_payload.CLIENT_ID }} -r ${{ github.event.client_payload.INSTANCE_URL }}
+        run: ~/sfdx/bin/sf login functions jwt --username ${{ github.event.client_payload.USER_NAME }} --keyfile ~/sfdx/server.key --clientid ${{ github.event.client_payload.CLIENT_ID }} --alias lmo_functions --set-default --set-default-dev-hub --instance-url ${{ github.event.client_payload.INSTANCE_URL }}
+
         if: github.event.client_payload.PRIVATE_KEY != ''
 
       - name: 'Create compute environment for the functions'
