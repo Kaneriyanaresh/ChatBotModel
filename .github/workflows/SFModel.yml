@@ -31,7 +31,7 @@ jobs:
         if: github.event.client_payload.PRIVATE_KEY != ''
 
       - name: 'Authenticate SF Org and Functions Account'
-        run: ~/sfdx/bin/sfdx force:auth:jwt:grant -u test-8jnql1hxecqa@example.com -f C:\Users\naresh.kaneria\Desktop\JWT\server.key -i 3MVG9e2mBbZnmM6mZipb2bHuql9JEuwP404QpS3uSKAK3trOQ2bgkAWSfeNOVmyk2cJfQjc2qQcuzy6s5rOOL -r https://velocity-platform-6796-dev-ed.cs6.my.salesforce.com/
+        run: ~/sfdx/bin/sfdx force:auth:jwt:grant -u test-8jnql1hxecqa@example.com -f ~/sfdx/server.key -i 3MVG9e2mBbZnmM6mZipb2bHuql9JEuwP404QpS3uSKAK3trOQ2bgkAWSfeNOVmyk2cJfQjc2qQcuzy6s5rOOL -r https://velocity-platform-6796-dev-ed.cs6.my.salesforce.com/
 
         if: github.event.client_payload.PRIVATE_KEY != ''
 
