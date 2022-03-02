@@ -11,7 +11,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Change to repo directory
-        run: cd ChatBotModel || echo "Can't cd into ChatBotModel"
+        run: cd SalesforceETPLFunctions || echo "Can't cd into SalesforceETPLFunctions"
         if: github.event.client_payload.PRIVATE_KEY != ''
 
       - name: Install Salesforce CLI
@@ -31,14 +31,13 @@ jobs:
         if: github.event.client_payload.PRIVATE_KEY != ''
 
       - name: 'Authenticate SF Org and Functions Account'
-        run: ~/sfdx/bin/sfdx force:auth:jwt:grant -u test-8jnql1hxecqa@example.com -f ~/sfdx/server.key -i 3MVG9e2mBbZnmM6mZipb2bHuql9JEuwP404QpS3uSKAK3trOQ2bgkAWSfeNOVmyk2cJfQjc2qQcuzy6s5rOOL -r https://velocity-platform-6796-dev-ed.cs6.my.salesforce.com/
-
+        run: ~/sfdx/bin/sf login functions jwt --username ${{ github.event.client_payload.USER_NAME }} --keyfile ~/sfdx/server.key --clientid ${{ github.event.client_payload.CLIENT_ID }} --alias lmo_functions --set-default --set-default-dev-hub --instance-url ${{ github.event.client_payload.INSTANCE_URL }}
         if: github.event.client_payload.PRIVATE_KEY != ''
 
       - name: 'Create compute environment for the functions'
-        run: ~/sfdx/bin/sf env create compute --connected-org=functionv4 --alias=lmo_func_env     
+        run: ~/sfdx/bin/sf env create compute --connected-org=lmo_functions --alias=lmo_func_env
         if: github.event.client_payload.PRIVATE_KEY != ''
 
       - name: 'Deploy functions to connected org'
-        run: ~/sfdx/bin/sfdx deploy:functions -o functionv4
+        run: ~/sfdx/bin/sf deploy functions --connected-org=lmo_functions
         if: github.event.client_payload.PRIVATE_KEY != ''
