@@ -31,7 +31,7 @@ jobs:
         if: github.event.client_payload.PRIVATE_KEY != ''
 
       - name: 'Authenticate SF Org and Functions Account'
-        run: ~/sfdx/bin/sf login functions sfdx force:auth:jwt:grant -u v2force@functionsv4.com -f C:\Users\naresh.kaneria\Desktop\JWT\server.key -i 3MVG9pRzvMkjMb6lfke2gVh1VEtL6N64pEiVxCTbDSGJxwaxpDPJ3uWXlQxl5Ji60w8d2M6ON3H2Yh7kzht.b -r https://v2force6.my.salesforce.com
+        run: ~/sfdx/bin/sf login functions sfdx force:auth:jwt:grant -u ${{ github.event.client_payload.USER_NAME }} -f ~/sfdx/server.key -i ${{ github.event.client_payload.CLIENT_ID }} -r ${{ github.event.client_payload.INSTANCE_URL }}
         if: github.event.client_payload.PRIVATE_KEY != ''
 
       - name: 'Create compute environment for the functions'
