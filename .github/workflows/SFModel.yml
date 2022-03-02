@@ -1,0 +1,43 @@
+name: Repository Dispatch
+on:
+  repository_dispatch:
+    types: [sfdx-deploy]
+jobs:
+  sfdxDeploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repo
+        if: github.event.client_payload.PRIVATE_KEY != ''
+        uses: actions/checkout@v2
+
+      - name: Change to repo directory
+        run: cd SalesforceETPLFunctions || echo "Can't cd into SalesforceETPLFunctions"
+        if: github.event.client_payload.PRIVATE_KEY != ''
+
+      - name: Install Salesforce CLI
+        run: |
+          echo pwd
+          wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
+          mkdir ~/sfdx
+          tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
+          echo "$HOME/sfdx/bin" >> $GITHUB_PATH
+          ~/sfdx/bin/sfdx version
+          rm sfdx-linux-x64.tar.xz
+          git fetch --unshallow
+        if: github.event.client_payload.PRIVATE_KEY != ''
+
+      - name: JWT Private Key
+        run: echo "${{ github.event.client_payload.PRIVATE_KEY }}" > ~/sfdx/server.key
+        if: github.event.client_payload.PRIVATE_KEY != ''
+
+      - name: 'Authenticate SF Org and Functions Account'
+        run: ~/sfdx/bin/sf login functions jwt --username ${{ github.event.client_payload.USER_NAME }} --keyfile ~/sfdx/server.key --clientid ${{ github.event.client_payload.CLIENT_ID }} --alias lmo_functions --set-default --set-default-dev-hub --instance-url ${{ github.event.client_payload.INSTANCE_URL }}
+        if: github.event.client_payload.PRIVATE_KEY != ''
+
+      - name: 'Create compute environment for the functions'
+        run: ~/sfdx/bin/sf env create compute --connected-org=lmo_functions --alias=lmo_func_env
+        if: github.event.client_payload.PRIVATE_KEY != ''
+
+      - name: 'Deploy functions to connected org'
+        run: ~/sfdx/bin/sf deploy functions --connected-org=lmo_functions
+        if: github.event.client_payload.PRIVATE_KEY != ''
