@@ -36,9 +36,9 @@ jobs:
         if: github.event.client_payload.PRIVATE_KEY != ''
 
       - name: 'Create compute environment for the functions'
-        run: ~/sfdx/bin/sf sf env create compute --connected-org=functionv4 --alias=lmo_func_env     
+        run: ~/sfdx/bin/sf env create compute --connected-org=functionv4 --alias=lmo_func_env     
         if: github.event.client_payload.PRIVATE_KEY != ''
 
       - name: 'Deploy functions to connected org'
-        run: ~/sfdx/bin/sf sfdx deploy:functions -o functionv4
+        run: ~/sfdx/bin/sfdx deploy:functions -o functionv4
         if: github.event.client_payload.PRIVATE_KEY != ''
