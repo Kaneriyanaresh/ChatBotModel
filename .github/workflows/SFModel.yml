@@ -1,17 +1,20 @@
 name: Repository Dispatch
 on:
   repository_dispatch:
-    types: [sfdx-deploy]
+    types: [sfdx-model]
 jobs:
-  sfdxDeploy:
+  sfdxModel:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repo
-        if: github.event.client_payload.PRIVATE_KEY != ''
-        uses: actions/checkout@v2
+        if: github.event.client_payload.ACCESS_TOKEN != ''
+        uses: actions/checkout@main
+        with:
+          repository: ${{ github.event.client_payload.ORG_NAME }}/${{ github.event.client_payload.REPO_NAME }}
+          token: ${{ github.event.client_payload.ACCESS_TOKEN }}
 
       - name: Change to repo directory
-        run: cd SalesforceETPLFunctions || echo "Can't cd into SalesforceETPLFunctions"
+        run: cd ${{ github.event.client_payload.REPO_NAME }} || echo "Can't cd into ${{ github.event.client_payload.REPO_NAME }}"
         if: github.event.client_payload.PRIVATE_KEY != ''
 
       - name: Install Salesforce CLI
