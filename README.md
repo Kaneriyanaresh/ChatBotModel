@@ -2,7 +2,7 @@
 
 ## Introduction
 
-If you are have received a Salesforce Functions Trial Org, it comes pre-loaded with Functions-enhanced demos that we call "Functions Recipes". But, in order for those demos to work, some configuration is required. Please complete all of the following steps before trying to use any of the demos in your Trial Org.
+The model is the [TensorFlow.js Sentiment Analysis](https://github.com/tensorflow/tfjs-examples/tree/master/sentiment#tensorflowjs-example-sentiment-analysis) model which is used as the basis for a simple product feedback page.
 
 ## Configure Your Trial Org
 
@@ -17,6 +17,7 @@ A note about Permission Sets: you will find that your default system administrat
 ## Install Prerequisite Tools
 
 Please refer to the section in our documentation called [Set Up Your Development Environment](https://sfdc.co/functions-install-guide) and install all of the required tools on your computer before proceeding to the next step.
+
 
 ## Clone Salesforce Functions Recipes Repository
 
