@@ -1,4 +1,4 @@
-# Functions Recipes — Trial Org Setup
+# Sentiments Functions Model
 
 ## Introduction
 
@@ -7,6 +7,8 @@ If you are have received a Salesforce Functions Trial Org, it comes pre-loaded w
 ## Configure Your Trial Org
 
 Follow the [directions in the Functions documentation](http://sfdc.co/functions-org-config) to configure your trial org for use with Functions and as a Developer Hub.
+
+Sing up function trial Org - [Sing Up link](https://functions-trials-manager-prod.herokuapp.com/signups)
 
 Be sure that you flipped the toggle switch to "Enable Production Space".
 
