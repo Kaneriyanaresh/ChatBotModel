@@ -18,60 +18,42 @@ A note about Permission Sets: you will find that your default system administrat
 
 Please refer to the section in our documentation called [Set Up Your Development Environment](https://sfdc.co/functions-install-guide) and install all of the required tools on your computer before proceeding to the next step.
 
+## Salesforce Org Setup and Deployment
+For more information about how to configure your organization for Salesforce Functions, please refer to the [documentation](http://sfdc.co/functions-org-config)
 
-## Clone Salesforce Functions Recipes Repository
+**Prerequisite: Functions Enabled Org**
 
-Clone the branch of this repository from GitHub that corresponds with the version that is installed on your Trial Org with the following commands in your terminal:
+ 1. If you haven't already sing up for function enable Org, you can sign up [Function Enable Sing Up](https://functions-trials-manager-prod.herokuapp.com/signups)
+ 
+ 2. Clone the Sentiments repository:
+     ```
+     git clone https://github.com/LastMileOps/LMO-TDX-Demo.git
+     ```
 
-```sh
-git clone https://github.com/trailheadapps/functions-recipes
-cd functions-recipes
-git checkout -t origin/trial/1.1
-```
+## Salesforce Functions Deployment
 
-## Log Into Your Trial Org With CLI
+1. Login to your Salesforce Functions account:
 
-Run this command in your terminal and use the username and password you received for your Trial Org to connect your CLI with your Trial Org:
+    ```
+    sf login functions
+    ```
 
-```sh
-sf login org -a functions_recipes
-```
+2. Create a **Compute Environment** to deploy the functions and connected it to your org:
 
-## Log Into Your Functions Account With CLI
+    ```sh
+    sf env create compute --connected-org=functions_recipes --alias=recipes_env
+    ```
+ 
+3. Deploy the functions
 
-Run this command in your terminal and use the same username and password you used in the previous step to connect your CLI to your Salesforce Functions account:
+    ```sh
+    sf deploy functions --connected-org=functions_recipes
+    ```
 
-```sh
-sf login functions
-```
+4. Push source app to the org:
 
-## Create Compute Environment For The Functions
+    ```sh
+    sfdx force:source:push -f
+    ```
 
-Run this command in your terminal to create a compute environment to install the Functions into:
 
-```sh
-sf env create compute --connected-org=functions_recipes --alias=recipes_env
-```
-
-## Deploy The Functions
-
-Run this command in your terminal to deploy the Functions into the Compute Environment created in the previous step:
-
-```sh
-sf deploy functions --connected-org=functions_recipes
-```
-
-## Log Out Of The CLI
-
-Now that the pieces are deployed, you can disconnect your CLI from your Trial Org and Functions account:
-
-```sh
-sf logout org --no-prompt -o functions_recipes
-sf logout functions
-```
-
-## Explore The Functions Demos In Your Trial Org
-
-It can take a few minutes for all of the Functions in this project to be ready for invocation, so consider taking a break.
-
-Then, with the Functions installed, you now can try out the demos listed down the left column of the start page of your Trial Org.
